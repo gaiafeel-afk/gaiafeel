@@ -6,14 +6,14 @@ import App from "./App";
 function fillValidForm() {
   fireEvent.change(screen.getByLabelText(/Judet/i), { target: { value: "Bucuresti" } });
   fireEvent.change(screen.getByLabelText(/Localitate \/ sector/i), { target: { value: "Sector 3" } });
-  fireEvent.change(screen.getByLabelText(/Nume asigurat/i), { target: { value: "Popescu" } });
-  fireEvent.change(screen.getByLabelText(/Prenume asigurat/i), { target: { value: "Andrei" } });
-  fireEvent.change(screen.getByLabelText(/^CNP asigurat/i), { target: { value: "1960212123456" } });
+  fireEvent.change(screen.getByLabelText(/^Nume asigurat$/i), { target: { value: "Popescu" } });
+  fireEvent.change(screen.getByLabelText(/^Prenume asigurat$/i), { target: { value: "Andrei" } });
+  fireEvent.change(screen.getByLabelText(/^CNP asigurat$/i), { target: { value: "1960212123456" } });
   fireEvent.change(screen.getByLabelText(/Serie si nr\. buletin/i), { target: { value: "RT123456" } });
   fireEvent.change(screen.getByLabelText(/Permis din anul/i), { target: { value: "2010" } });
 
   fireEvent.change(screen.getByLabelText(/Marca/i), { target: { value: "Dacia" } });
-  fireEvent.change(screen.getByLabelText(/^Model/i), { target: { value: "Logan" } });
+  fireEvent.change(screen.getByLabelText(/^Model$/i), { target: { value: "Logan" } });
   fireEvent.change(screen.getByLabelText(/Cilindree/i), { target: { value: "1461" } });
   fireEvent.change(screen.getByLabelText(/Putere/i), { target: { value: "70" } });
   fireEvent.change(screen.getByLabelText(/Masa maxima/i), { target: { value: "1450" } });
@@ -37,14 +37,16 @@ describe("RCA App", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { name: /Calculeaza in timp real/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /AFLA PRETUL/i })).toBeDisabled();
+    const ctaButtons = screen.getAllByRole("button", { name: /AFLA PRETUL/i });
+    expect(ctaButtons.every((button) => button.hasAttribute("disabled"))).toBe(true);
   });
 
   it("updates the estimated premium after valid changes", () => {
     render(<App />);
     fillValidForm();
 
-    expect(screen.getByRole("button", { name: /AFLA PRETUL/i })).toBeEnabled();
+    const ctaButtons = screen.getAllByRole("button", { name: /AFLA PRETUL/i });
+    expect(ctaButtons.some((button) => !button.hasAttribute("disabled"))).toBe(true);
 
     act(() => {
       vi.advanceTimersByTime(170);

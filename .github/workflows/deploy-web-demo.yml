@@ -44,6 +44,9 @@ jobs:
       - name: Build Somatic web demo
         run: pnpm --filter @somatic/mobile run export:web
 
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

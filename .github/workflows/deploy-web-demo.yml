@@ -1,4 +1,4 @@
-name: Deploy RCA Web Demo
+name: Deploy Somatic Web Demo
 
 on:
   workflow_dispatch:
@@ -18,6 +18,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      EXPO_PUBLIC_SUPABASE_URL: ${{ vars.EXPO_PUBLIC_SUPABASE_URL || 'https://example.supabase.co' }}
+      EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.EXPO_PUBLIC_SUPABASE_ANON_KEY || 'demo-anon-key' }}
+      EXPO_PUBLIC_REVENUECAT_API_KEY_IOS: ${{ vars.EXPO_PUBLIC_REVENUECAT_API_KEY_IOS || 'demo-ios-key' }}
+      EXPO_PUBLIC_REVENUECAT_API_KEY_ANDROID: ${{ vars.EXPO_PUBLIC_REVENUECAT_API_KEY_ANDROID || 'demo-android-key' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,13 +41,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build RCA web app
-        run: pnpm --filter @somatic/rca-web run build
+      - name: Build Somatic web demo
+        run: pnpm --filter @somatic/mobile run export:web
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: apps/rca-web/dist
+          path: apps/mobile/dist-web
 
   deploy:
     needs: build

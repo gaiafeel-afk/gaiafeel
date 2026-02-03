@@ -1,0 +1,13 @@
+project_id = "somatic-worksheets"
+
+[functions.progression-get-state]
+verify_jwt = true
+
+[functions.progression-complete]
+verify_jwt = true
+
+[functions.billing-webhook-revenuecat]
+verify_jwt = false
+
+[functions.account-delete]
+verify_jwt = true

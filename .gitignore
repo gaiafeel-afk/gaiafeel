@@ -1,0 +1,15 @@
+node_modules
+.pnpm-store
+.env
+.env.*
+.expo
+.expo-shared
+*.log
+coverage
+dist
+.DS_Store
+.supabase
+apps/mobile/.expo
+apps/mobile/.env
+apps/mobile/.env.*
+apps/mobile/dist-web

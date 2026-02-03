@@ -1,0 +1,13 @@
+{
+  "name": "somatic-worksheets",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev:rca-web": "pnpm --filter @somatic/rca-web dev",
+    "test:rca": "pnpm --filter @somatic/rca-engine test && pnpm --filter @somatic/rca-web test",
+    "typecheck:rca": "pnpm --filter @somatic/rca-engine typecheck && pnpm --filter @somatic/rca-web typecheck",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test"
+  }
+}
